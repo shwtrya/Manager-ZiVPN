@@ -22,6 +22,7 @@ fetch_to() {
     wget -q "${REPO_RAW}/${src}" -O "$dst"
   fi
 }
+export -f fetch_to
 
 
 print_task() {
@@ -49,6 +50,7 @@ run_silent() {
     print_fail "$msg (Check /tmp/zivpn_install.log)"
   fi
 }
+
 
 clear
 echo -e "${BOLD}ZiVPN UDP Installer${RESET}"
