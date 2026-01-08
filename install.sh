@@ -11,7 +11,7 @@ BOLD="\033[1m"
 GRAY="\033[1;30m"
 
 # Repo raw URL (change this to your GitHub repo after upload)
-REPO_RAW="${REPO_RAW:-https://raw.githubusercontent.com/shwtrya/ZiVPN-Update-1.4/main}"
+REPO_RAW="${REPO_RAW:-https://raw.githubusercontent.com/shwtrya/Manager-ZiVPN/main}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 fetch_to() {
@@ -103,7 +103,7 @@ run_silent "Downloading Core" "wget -q https://github.com/zahidbd2/udp-zivpn/rel
 mkdir -p /etc/zivpn
 echo "$domain" > /etc/zivpn/domain
 echo "$api_key" > /etc/zivpn/apikey
-run_silent "Configuring" "wget -q https://raw.githubusercontent.com/AutoFTbot/ZiVPN/main/config.json -O /etc/zivpn/config.json"
+run_silent "Configuring" "wget -q https://raw.githubusercontent.com/shwtrya/Manager-ZiVPN/main/config.json -O /etc/zivpn/config.json"
 
 run_silent "Generating SSL" "openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj '/C=ID/ST=Jawa Barat/L=Bandung/O=AutoFTbot/OU=IT Department/CN=$domain' -keyout /etc/zivpn/zivpn.key -out /etc/zivpn/zivpn.crt"
 
@@ -160,7 +160,7 @@ WantedBy=multi-user.target
 EOF
 
 mkdir -p /etc/zivpn/api
-run_silent "Setting up API" "wget -q https://raw.githubusercontent.com/AutoFTbot/ZiVPN/main/zivpn-api.go -O /etc/zivpn/api/zivpn-api.go && wget -q https://raw.githubusercontent.com/AutoFTbot/ZiVPN/main/go.mod -O /etc/zivpn/api/go.mod"
+run_silent "Setting up API" "wget -q https://raw.githubusercontent.com/shwtrya/Manager-ZiVPN/main/zivpn-api.go -O /etc/zivpn/api/zivpn-api.go && wget -q https://raw.githubusercontent.com/shwtrya/Manager-ZiVPN/main/go.mod -O /etc/zivpn/api/go.mod"
 
 cd /etc/zivpn/api
 if go build -o zivpn-api zivpn-api.go &>/dev/null; then
@@ -399,5 +399,5 @@ echo -e "${BOLD}Installation Complete${RESET}"
 echo -e "Domain  : ${CYAN}$domain${RESET}"
 echo -e "API     : ${CYAN}$API_PORT${RESET}"
 echo -e "Token   : ${CYAN}$api_key${RESET}"
-echo -e "Dev     : ${CYAN}https://t.me/AutoFTBot${RESET}"
+echo -e "Dev     : ${CYAN}https://t.me/shwtrya${RESET}"
 echo ""
