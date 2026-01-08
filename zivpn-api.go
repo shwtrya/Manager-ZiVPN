@@ -323,7 +323,7 @@ func renewUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := ensureSystemUser(req.Password, req.Password, expDate); err != nil {
+	if err := ensureSystemUser(req.Password, req.Password, newExpDate); err != nil {
 		jsonResponse(w, http.StatusInternalServerError, false, "Gagal update akun multi-protocol (system user)", map[string]string{"detail": err.Error()})
 		return
 	}
