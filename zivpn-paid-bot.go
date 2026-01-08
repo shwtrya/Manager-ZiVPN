@@ -684,6 +684,38 @@ func processRestoreFile(bot *tgbotapi.BotAPI, msg *tgbotapi.Message, config *Bot
 	showMainMenu(bot, chatID, config)
 }
 
+func isOwner(userID int64, config *BotConfig) bool {
+	return userID == config.OwnerID
+}
+
+func isAdmin(userID int64, config *BotConfig) bool {
+	if isOwner(userID, config) {
+		return true
+	}
+	for _, id := range config.AdminIDs {
+		if userID == id {
+			return true
+		}
+	}
+	return false
+}
+
+func isViewer(userID int64, config *BotConfig) bool {
+	if isAdmin(userID, config) {
+		return true
+	}
+	for _, id := range config.ViewerIDs {
+		if userID == id {
+			return true
+		}
+	}
+	return false
+}
+
+func isAllowed(config *BotConfig, userID int64) bool {
+	return config.Mode == "public" || isViewer(userID, config)
+}
+
 func loadConfig() (BotConfig, error) {
 	var config BotConfig
 	file, err := ioutil.ReadFile(BotConfigFile)
