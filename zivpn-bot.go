@@ -216,7 +216,7 @@ func handleMessage(bot *tgbotapi.BotAPI, msg *tgbotapi.Message, config *BotConfi
 			replyError(bot, msg.Chat.ID, "Perintah tidak dikenal.")
 		}
 	}
-
+}
 
 func handleCallback(bot *tgbotapi.BotAPI, query *tgbotapi.CallbackQuery, config *BotConfig) {
 	// Access Control (Special case for toggle_mode)
@@ -1014,6 +1014,14 @@ func sendMessage(bot *tgbotapi.BotAPI, chatID int64, text string) {
 
 func replyError(bot *tgbotapi.BotAPI, chatID int64, text string) {
 	sendMessage(bot, chatID, "❌ "+text)
+}
+
+func replyInfo(bot *tgbotapi.BotAPI, chatID int64, text string) {
+	sendMessage(bot, chatID, text)
+}
+
+func replySuccess(bot *tgbotapi.BotAPI, chatID int64, text string) {
+	sendMessage(bot, chatID, "✅ "+text)
 }
 
 func sendAndTrack(bot *tgbotapi.BotAPI, msg tgbotapi.MessageConfig) {
