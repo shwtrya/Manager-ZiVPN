@@ -43,7 +43,7 @@ run_silent() {
   local cmd="$2"
   
   print_task "$msg"
-  bash -c "$cmd" &>/tmp/zivpn_install.log
+  ( eval "$cmd" ) &>/tmp/zivpn_install.log
   if [ $? -eq 0 ]; then
     print_done "$msg"
   else
