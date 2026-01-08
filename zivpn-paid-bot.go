@@ -38,13 +38,15 @@ var ApiUrl = "http://127.0.0.1:" + PortFile + "/api"
 var ApiKey = "AutoFtBot-agskjgdvsbdreiWG1234512SDKrqw"
 
 type BotConfig struct {
-	BotToken      string `json:"bot_token"`
-	AdminID        int64  `json:"admin_id"`
-	Mode           string `json:"mode"`
-	Domain         string `json:"domain"`
-	PakasirSlug    string `json:"pakasir_slug"`
-	PakasirApiKey  string `json:"pakasir_api_key"`
-	DailyPrice     int    `json:"daily_price"`
+	BotToken     string  `json:"bot_token"`
+	OwnerID      int64   `json:"owner_id"`
+	AdminIDs     []int64 `json:"admin_ids"`
+	ViewerIDs    []int64 `json:"viewer_ids"`
+	Mode         string  `json:"mode"`
+	Domain       string  `json:"domain"`
+	PakasirSlug  string  `json:"pakasir_slug"`
+	PakasirApiKey string `json:"pakasir_api_key"`
+	DailyPrice   int     `json:"daily_price"`
 }
 
 type IpInfo struct {
@@ -402,7 +404,7 @@ func showMainMenu(bot *tgbotapi.BotAPI, chatID int64, config *BotConfig) {
 	)
 
 	// Add Admin Panel for Admin
-	if chatID == config.AdminID {
+	if isAdmin(chatID, config) {
 		keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("📊 System Info", "menu_info"),
 		))
@@ -446,6 +448,14 @@ func sendMessage(bot *tgbotapi.BotAPI, chatID int64, text string) {
 
 func replyError(bot *tgbotapi.BotAPI, chatID int64, text string) {
 	sendMessage(bot, chatID, "❌ "+text)
+}
+
+func replyInfo(bot *tgbotapi.BotAPI, chatID int64, text string) {
+	sendMessage(bot, chatID, text)
+}
+
+func replySuccess(bot *tgbotapi.BotAPI, chatID int64, text string) {
+	sendMessage(bot, chatID, "✅ "+text)
 }
 
 func cancelOperation(bot *tgbotapi.BotAPI, chatID int64, userID int64, config *BotConfig) {
